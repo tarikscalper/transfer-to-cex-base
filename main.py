@@ -8,6 +8,7 @@ BASE_RPC = 'https://mainnet.base.org'  # офіційний RPC
 TOKEN_ADDRESS = Web3.to_checksum_address('0x1111111111166b7FE7bd91427724B487980aFc69')
 MAX_GAS_FEE_USD = 0.10  # максимум $0.10
 ETH_USD = 3000  # тут постав реальну ціну ETH вручну, або пізніше можна буде автоматизувати
+TOKEN_DECIMALS = 18  # кількість знаків після коми в токена
 TOKEN_ABI = [{
     "constant": True,
     "inputs": [{"name": "_owner", "type": "address"}],
@@ -70,7 +71,8 @@ for pk, exchange_address in zip(private_keys, exchange_addresses):
 
     signed_tx = w3.eth.account.sign_transaction(tx, pk)
     tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-    print(f"   ✅ Відправлено {balance} токенів. Тx: {w3.to_hex(tx_hash)}")
+    readable_amount = balance / 10**TOKEN_DECIMALS
+    print(f"   ✅ Відправлено {readable_amount:.6f} токенів. Тx: {w3.to_hex(tx_hash)}")
 
     sleep_time = random.randint(10, 30)
     print(f"   🕒 Очікування {sleep_time} сек...")
