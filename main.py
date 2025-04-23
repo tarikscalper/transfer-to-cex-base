@@ -7,7 +7,7 @@ from eth_account import Account
 BASE_RPC = 'https://mainnet.base.org'  # офіційний RPC
 TOKEN_ADDRESS = Web3.to_checksum_address('0x1111111111166b7FE7bd91427724B487980aFc69')
 MAX_GAS_FEE_USD = 0.10  # максимум $0.10
-ETH_USD = 3000  # тут постав реальну ціну ETH вручну, або пізніше можна буде автоматизувати
+ETH_USD = 1700  # тут постав реальну ціну ETH вручну, або пізніше можна буде автоматизувати
 TOKEN_DECIMALS = 18  # кількість знаків після коми в токена
 TOKEN_ABI = [{
     "constant": True,
