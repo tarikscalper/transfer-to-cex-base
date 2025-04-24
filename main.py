@@ -8,7 +8,6 @@ BASE_RPC = 'https://mainnet.base.org'
 MAX_GAS_FEE_USD = 0.10
 ETH_USD = 1700  # онови вручну або автоматизуй
 GAS_LIMIT = 21_000
-BUFFER_ETH = 0.0002  # запас на газ
 
 w3 = Web3(Web3.HTTPProvider(BASE_RPC))
 
@@ -37,7 +36,8 @@ for pk, exchange_address in zip(private_keys, exchange_addresses):
         print(f"   ❌ Комісія занадто висока: ${gas_fee_usd:.4f}")
         continue
 
-    buffer = int(BUFFER_ETH * 10**18)
+    buffer_eth = random.uniform(0.0001, 0.00024)
+    buffer = int(buffer_eth * 10**18)
     estimated_fee = gas_price * GAS_LIMIT
     send_amount = balance - estimated_fee - buffer
 
@@ -57,6 +57,7 @@ for pk, exchange_address in zip(private_keys, exchange_addresses):
     signed_tx = w3.eth.account.sign_transaction(tx, private_key=pk)
     tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
     print(f"   ✅ Відправлено {(send_amount / 10**18):.6f} ETH. Tx: {w3.to_hex(tx_hash)}")
+    print(f"   🧮 Буфер залишку: {buffer_eth:.8f} ETH")
 
     sleep_time = random.randint(10, 30)
     print(f"   🕒 Очікування {sleep_time} сек...")
